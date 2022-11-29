@@ -1,15 +1,21 @@
 package com.example.Market.Data.Service.controller;
 
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import com.example.Market.Data.Service.stock.Stock;
+import org.springframework.web.bind.annotation.*;
 
-@Controller
+import java.util.*;
+
+@RestController
+@RequestMapping("api/v1")
 public class MarketDataWebHookController {
 
-    @GetMapping("/")
-    @ResponseBody
-    public String starter(){
-        return "Hello, World";
+    @PostMapping("/exchange1-market-data")
+    public void exchange1Subcription(@RequestBody Stock requestBody){
+        System.out.println("received data from exchange 1 => " + requestBody);
+    }
+
+    @PostMapping("/exchange2-market-data")
+    public void exchange2Subscription(@RequestBody Stock requestBody){
+        System.out.println("received data from exchange 2 => " + requestBody);
     }
 }
