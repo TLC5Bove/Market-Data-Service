@@ -1,6 +1,6 @@
 package com.example.Market.Data.Service.publisher;
 
-import org.apache.logging.log4j.message.Message;
+import com.example.Market.Data.Service.stock.Stock;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.listener.ChannelTopic;
@@ -23,7 +23,7 @@ public class Publisher implements MessagePublisher {
     }
 
     @Override
-    public void publisher(String message) {
+    public void publisher(Stock message) {
         redisTemplate.convertAndSend(topic.getTopic(),message);
     }
 }
