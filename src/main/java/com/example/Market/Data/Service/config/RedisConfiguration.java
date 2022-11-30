@@ -2,6 +2,7 @@ package com.example.Market.Data.Service.config;
 import com.example.Market.Data.Service.publisher.Publisher;
 
 import com.example.Market.Data.Service.publisher.MessagePublisher;
+import com.example.Market.Data.Service.stock.Stock;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
@@ -9,7 +10,7 @@ import org.springframework.data.redis.connection.RedisStandaloneConfiguration;
 import org.springframework.data.redis.connection.lettuce.LettuceConnectionFactory;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.listener.ChannelTopic;
-import org.springframework.data.redis.serializer.GenericToStringSerializer;
+import org.springframework.data.redis.serializer.Jackson2JsonRedisSerializer;
 
 @Configuration
 public class RedisConfiguration {
@@ -37,7 +38,7 @@ public class RedisConfiguration {
     {
         RedisTemplate<String,Object> redisTemplate = new RedisTemplate<>();
         redisTemplate.setConnectionFactory(redisConnectionFactory);
-        redisTemplate.setValueSerializer(new GenericToStringSerializer<Object>(Object.class));
+        redisTemplate.setValueSerializer(new Jackson2JsonRedisSerializer<Object>(Object.class));
         return redisTemplate;
     }
     @Bean
