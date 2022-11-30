@@ -1,7 +1,9 @@
 package com.example.Market.Data.Service.stock;
 
+//import jakarta.persistence.Entity;
 import lombok.Data;
 
+//@Entity
 @Data
 public class Stock {
 //    private int SELL_LIMIT;
