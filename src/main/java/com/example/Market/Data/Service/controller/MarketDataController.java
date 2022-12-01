@@ -9,7 +9,7 @@ import org.springframework.web.reactive.function.client.WebClient;
 
 @RestController
 public class MarketDataController {
-    private WebClient webClient = WebClient.create();
+    private final WebClient webClient = WebClient.create();
 
     @GetMapping("/api/v1/full-market-data")
     public String getFullMarketData() {
