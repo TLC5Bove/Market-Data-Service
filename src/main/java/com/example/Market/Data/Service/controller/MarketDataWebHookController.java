@@ -22,11 +22,15 @@ public class MarketDataWebHookController {
     @Autowired
     StockEx2Service stockEx2Service;
 
+    @Autowired
+    WebSocketController webSocketController;
+
     @PostMapping("/exchange1-market-data")
     public StockEx1 exchange1Subscription(@RequestBody StockEx1 requestBody){
         if (Objects.equals(requestBody.getOrderType(), "LIMIT")) {
             System.out.println(">>>>> Received data from exchange 1 => " + requestBody + " => Sending the data to the order processing service");
             publisher.publisher(requestBody);
+            webSocketController.send(requestBody);
             stockEx1Service.saveStockData(requestBody);
         }
         return requestBody;
