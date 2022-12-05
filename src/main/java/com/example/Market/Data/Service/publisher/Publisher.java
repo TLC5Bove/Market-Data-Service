@@ -1,6 +1,6 @@
 package com.example.Market.Data.Service.publisher;
 
-import com.example.Market.Data.Service.stock.Stock;
+import com.example.Market.Data.Service.dto.stock.Stock;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.listener.ChannelTopic;
