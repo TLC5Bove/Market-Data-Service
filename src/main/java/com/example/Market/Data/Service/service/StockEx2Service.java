@@ -18,4 +18,8 @@ public class StockEx2Service {
     }
 
     public List<StockEx2> getAllExchange2Stocks() { return stockDao.findAll(); }
+
+    public List<StockEx2> getAllExchange2StockByProduct(String product) {
+        return stockDao.findAllByProduct(product);
+    }
 }
