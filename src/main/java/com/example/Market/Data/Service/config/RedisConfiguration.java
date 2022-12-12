@@ -3,25 +3,29 @@ import com.example.Market.Data.Service.publisher.Publisher;
 
 import com.example.Market.Data.Service.publisher.MessagePublisher;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Primary;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
 import org.springframework.data.redis.connection.RedisStandaloneConfiguration;
 import org.springframework.data.redis.connection.lettuce.LettuceConnectionFactory;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.listener.ChannelTopic;
 import org.springframework.data.redis.serializer.Jackson2JsonRedisSerializer;
+import org.springframework.data.redis.serializer.StringRedisSerializer;
 
 @Configuration
+@EnableCaching
 public class RedisConfiguration {
-    @Value(value = "${spring.redis.host}")
+    @Value(value = "${spring.data.redis.host}")
     private String host;
 
-    @Value(value = "${spring.redis.port}")
+    @Value(value = "${spring.data.redis.port}")
     private int port;
 
     @Bean
-    LettuceConnectionFactory lettuceConnectionFactory(){
+    public LettuceConnectionFactory lettuceConnectionFactory(){
         RedisStandaloneConfiguration configuration = new RedisStandaloneConfiguration();
         configuration.setHostName(host);
         configuration.setPort(port);
@@ -40,16 +44,14 @@ public class RedisConfiguration {
     }*/
 
     @Bean
-    public RedisTemplate<String,Object> redisTemplate(RedisConnectionFactory redisConnectionFactory)
+    @Primary
+    public RedisTemplate<String,Object> redisTemplate()
     {
-        RedisTemplate<String,Object> redisTemplate = new RedisTemplate<>();
-        redisTemplate.setConnectionFactory(redisConnectionFactory);
-        redisTemplate.setValueSerializer(new Jackson2JsonRedisSerializer<Object>(Object.class));
+        final RedisTemplate<String,Object> redisTemplate = new RedisTemplate<>();
+        redisTemplate.setKeySerializer(new StringRedisSerializer());
+        redisTemplate.setHashKeySerializer(new Jackson2JsonRedisSerializer<>(Object.class));
+        redisTemplate.setValueSerializer(new Jackson2JsonRedisSerializer<>(Object.class));
+        redisTemplate.setConnectionFactory(lettuceConnectionFactory());
         return redisTemplate;
-    }
-    @Bean
-    public MessagePublisher messagePublisher()
-    {
-        return new Publisher(redisTemplate(lettuceConnectionFactory()), topic());
     }
 }
