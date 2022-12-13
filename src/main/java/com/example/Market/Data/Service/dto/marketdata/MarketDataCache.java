@@ -12,7 +12,7 @@ import java.io.Serializable;
 @ToString
 public class MarketDataCache implements Serializable {
     @Serial
-    private static final long serialVersionUID = -7817224776021728682L;
+    private static final long serialVersionUID = -7817224776021728681L;
 
     private Double MAX_PRICE_SHIFT;
     private Double LAST_TRADED_PRICE;

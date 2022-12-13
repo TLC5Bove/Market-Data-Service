@@ -16,8 +16,8 @@ public class MarketDataRepository implements MarketDataDao {
     private RedisTemplate hashOperations;
 
     @Override
-    public void saveData(MarketDataCache data) {
-        hashOperations.opsForHash().putIfAbsent(hashReference, data.getTICKER(), data);
+    public void saveData(Object data, String ticker) {
+        hashOperations.opsForHash().putIfAbsent(hashReference, ticker, data);
     }
 
     @Override

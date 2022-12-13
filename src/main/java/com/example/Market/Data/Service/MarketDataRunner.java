@@ -59,7 +59,7 @@ public class MarketDataRunner implements CommandLineRunner {
             throw new RuntimeException(e);
         }
 
-        marketDataRepository.getAllMarketData().forEach((k, v) -> System.out.println(k +": "+ v));
+//        marketDataRepository.getAllMarketData().forEach((k, v) -> System.out.println(k +": "+ v));
 
     }
 
@@ -67,6 +67,7 @@ public class MarketDataRunner implements CommandLineRunner {
         MarketDataCache marketData = new Gson().fromJson(object.toString(), MarketDataCache.class);
         String ticker = marketData.getTICKER()+"_"+exchange;
         marketData.setTICKER(ticker);
-        marketDataRepository.saveData(marketData);
+        System.out.println(object);
+        marketDataRepository.saveData( object, marketData.getTICKER());
     }
 }
